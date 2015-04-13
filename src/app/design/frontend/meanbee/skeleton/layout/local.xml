@@ -14,6 +14,10 @@
             <action method="addItem"><type>skin_css</type><name>css/application.css</name><params/><if><![CDATA[<!--[if (gt IE 9) | (IEMobile)]><!-->]]></if></action>
         </reference>
 
+        <reference name="catalog.topnav">
+            <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+        </reference>
+
         <reference name="before_body_end">
             <block type="page/html_head" name="footer.javascript" template="page/html/footer/javascript.phtml" />
         </reference>
