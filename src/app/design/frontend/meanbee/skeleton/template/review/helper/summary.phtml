@@ -25,14 +25,15 @@
  */
 ?>
 <?php if ($this->getReviewsCount()): ?>
-    <div class="ratings">
+    <div class="ratings" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
         <?php if ($this->getRatingSummary()):?>
             <div class="rating-box">
-                <div class="rating" style="width:<?php echo $this->getRatingSummary() ?>%"></div>
+                <div itemprop="ratingValue" class="rating" style="width:<?php echo $this->getRatingSummary() ?>%"><?php echo $this->getRatingSummary() ?></div>
+                <meta itemprop="bestRating" content="100" />
             </div>
         <?php endif;?>
         <p class="rating-links">
-            <a href="<?php echo $this->getReviewsUrl() ?>"><?php echo $this->__('%d Review(s)', $this->getReviewsCount()) ?></a>
+            <a href="<?php echo $this->getReviewsUrl() ?>" itemprop="url"><span itemprop="reviewCount"><?php echo $this->getReviewsCount() ?> </span><?php echo $this->__('Review(s)') ?></a>
             <span class="separator">|</span>
             <a href="<?php echo $this->getReviewsUrl() ?>#review-form"><?php echo $this->__('Add Your Review') ?></a>
         </p>
