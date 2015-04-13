@@ -48,10 +48,21 @@ foreach ($children as $child) {
 
     $outermostClassCode = 'level'. $childLevel;
     $_hasChildren = ($child->hasChildren()) ? 'has-children' : '';
+    $_ariaPopup = '';
+    $_ariaControls = '';
+    $_ariaLabelledBy = '';
+    $_submenuId = 'nav-submenu-' . $counter;
+    $_topLinkId = 'nav-parent-' . $counter;
+
+    if (!empty($_hasChildren)) {
+        $_ariaPopup = 'aria-haspopup="true"';
+        $_ariaControls = 'aria-controls="' . $_submenuId . '"';
+        $_ariaLabelledBy = 'aria-labelledby="' . $_topLinkId . '"';
+    }
 
     $html .= '<li '. $this->_getRenderedMenuItemAttributes($child) .'>';
 
-    $html .= '<a href="'. $child->getUrl() .'" class="'. $outermostClassCode .' '. $_hasChildren .'">'. $this->escapeHtml($this->__($child->getName())) .'</a>';
+    $html .= '<a id="'. $_topLinkId .'"' . $_ariaPopup . $_ariaControls . 'href="'. $child->getUrl() .'" class="'. $outermostClassCode .' '. $_hasChildren .'">'. $this->escapeHtml($this->__($child->getName())) .'</a>';
 
     if (!empty($childrenWrapClass)) {
         $html .= '<div class="'. $childrenWrapClass .'">';
@@ -60,7 +71,7 @@ foreach ($children as $child) {
     $nextChildLevel = $childLevel + 1;
 
     if (!empty($_hasChildren)) {
-        $html .= '<ul class="level'. $childLevel .'">';
+        $html .= '<ul role="group" class="level'. $childLevel .'" id="'. $_submenuId .'"'. $_ariaLabelledBy .'>';
         $html .=     '<li class="level'. $nextChildLevel .' view-all">';
         $html .=         '<a class="level'. $nextChildLevel .'" href="'. $child->getUrl() .'">';
         $html .=             $this->__('View All') . ' ' . $this->escapeHtml($this->__($child->getName()));
