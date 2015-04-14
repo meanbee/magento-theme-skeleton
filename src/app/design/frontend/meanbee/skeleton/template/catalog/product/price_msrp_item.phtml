@@ -48,7 +48,7 @@ $priceElementIdPrefix = $this->getPriceElementIdPrefix() ? $this->getPriceElemen
     <?php $_price = $this->helper('tax')->getPrice($_product, $_product->getMsrp()) ?>
     <?php if($_product->getMsrp()): ?>
         <?php $_msrpPrice = $_coreHelper->currency($_product->getMsrp(),true,true) ?>
-        <span class="old-price" ><?php echo $_msrpPrice ?></span>
+        <span class="old-price" itemprop="price"><?php echo $_msrpPrice ?></span>
     <?php endif; ?>
 
     <?php if ($_catalogHelper->isShowPriceOnGesture($_product)): ?>
