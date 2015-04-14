@@ -27,19 +27,23 @@
 <?php if($crumbs && is_array($crumbs)): ?>
     <div class="breadcrumbs">
         <ul>
-            <?php foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
-                <li class="<?php echo $_crumbName ?>">
+            <?php $_breadcrumbSize = count($crumbs) ?>
+            <?php $_count = 1; foreach($crumbs as $_crumbName=>$_crumbInfo): ?>
+                <li class="<?php echo $_crumbName ?>" <?php if(!$_crumbInfo['last']): ?>itemscope itemtype="http://data-vocabulary.org/Breadcrumb" <?php if ($_count >= 0): ?>itemprop="child"<?php endif ?> id="crumb-<?php echo $_count ?>" <?php if ($_count+1 < $_breadcrumbSize): ?>itemref="crumb-<?php echo $_count+1 ?>"<?php endif; ?><?php endif ?>>
                     <?php if($_crumbInfo['link']): ?>
-                        <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></a>
+                        <a href="<?php echo $_crumbInfo['link'] ?>" itemprop="url" title="<?php echo $this->escapeHtml($_crumbInfo['title']) ?>">
+                            <span itemprop="title"><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span>
+                        </a>
                     <?php elseif($_crumbInfo['last']): ?>
                         <strong><?php echo $this->escapeHtml($_crumbInfo['label']) ?></strong>
                     <?php else: ?>
-                        <?php echo $this->escapeHtml($_crumbInfo['label']) ?>
+                        <span><?php echo $this->escapeHtml($_crumbInfo['label']) ?></span>
                     <?php endif; ?>
                     <?php if(!$_crumbInfo['last']): ?>
                         <span>/ </span>
                     <?php endif; ?>
                 </li>
+                <?php $_count++; ?>
             <?php endforeach; ?>
         </ul>
     </div>
