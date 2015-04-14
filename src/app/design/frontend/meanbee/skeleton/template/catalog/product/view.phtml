@@ -37,8 +37,8 @@
     var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
 </script>
 <div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
-<div class="product-view">
-    <div class="product-essential" itemscope itemtype="http://schema.org/Product">
+<div class="product-view" itemscope itemtype="http://schema.org/Product">
+    <div class="product-essential">
         <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
             <?php echo $this->getBlockHtml('formkey') ?>
             <div class="no-display">
@@ -57,8 +57,12 @@
 
                 <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
                 <?php echo $this->getChildHtml('alert_urls') ?>
-                <?php echo $this->getChildHtml('product_type_data') ?>
-                <?php echo $this->getTierPriceHtml() ?>
+
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <?php echo $this->getChildHtml('product_type_data') ?>
+                    <?php echo $this->getTierPriceHtml() ?>
+                </div>
+
                 <?php echo $this->getChildHtml('extrahint') ?>
 
                 <?php if (!$this->hasOptions()):?>
@@ -81,7 +85,7 @@
                 <?php if ($_product->getShortDescription()):?>
                     <div class="short-description">
                         <h2><?php echo $this->__('Quick Overview') ?></h2>
-                        <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
+                        <div class="std" itemprop="description"><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
                     </div>
                 <?php endif;?>
 

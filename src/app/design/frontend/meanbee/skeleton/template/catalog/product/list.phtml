@@ -56,18 +56,22 @@ $_helper = $this->helper('catalog/output');
                                 <?php if($_product->getRatingSummary()): ?>
                                     <?php echo $this->getReviewsSummaryHtml($_product) ?>
                                 <?php endif; ?>
-                                <?php echo $this->getPriceHtml($_product, true) ?>
-                                <?php if($_product->isSaleable()): ?>
-                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-availability">
-                                        <link itemprop="availability" href="http://schema.org/InStock"/>
-                                        <p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
-                                    </div>
-                                <?php else: ?>
-                                    <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-availability">
-                                        <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                                    </div>
-                                <?php endif; ?>
+
+                                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                    <?php echo $this->getPriceHtml($_product, true) ?>
+                                    <?php if($_product->isSaleable()): ?>
+                                        <div class="product-availability">
+                                            <link itemprop="availability" href="http://schema.org/InStock"/>
+                                            <p><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="product-availability">
+                                            <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
                                 <div class="desc std" itemprop="description">
                                     <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
                                     <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
@@ -103,28 +107,31 @@ $_helper = $this->helper('catalog/output');
                 <?php if($_product->getRatingSummary()): ?>
                     <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                 <?php endif; ?>
-                <?php echo $this->getPriceHtml($_product, true) ?>
-                <div class="actions">
-                    <?php if($_product->isSaleable()): ?>
-                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-availability">
-                            <link itemprop="availability" href="http://schema.org/InStock"/>
-                            <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                        </div>
-                    <?php else: ?>
-                        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-availability">
-                            <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                        </div>
-                    <?php endif; ?>
-                    <ul class="add-to-links">
-                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    <div class="actions">
+                        <?php if($_product->isSaleable()): ?>
+                            <div class="product-availability">
+                                <link itemprop="availability" href="http://schema.org/InStock"/>
+                                <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                            </div>
+                        <?php else: ?>
+                            <div class="product-availability">
+                                <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                                <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                            </div>
                         <?php endif; ?>
-                        <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
-                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
-                        <?php endif; ?>
-                    </ul>
+                        <ul class="add-to-links">
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
                 </div>
+
             </li>
             <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
             </ul>
