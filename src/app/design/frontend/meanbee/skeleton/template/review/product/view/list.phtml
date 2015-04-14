@@ -29,13 +29,11 @@
 <div class="box-collateral box-reviews" id="customer-reviews">
     <?php if (count($_items)):?>
         <h2><?php echo $this->__('Customer Reviews') ?></h2>
-        <?php echo $this->getChildHtml('toolbar') ?
-        <dl>
+        <?php echo $this->getChildHtml('toolbar') ?>
+        <ul>
         <?php foreach ($_items as $_review):?>
-            <dt>
-                <a href="<?php echo $this->getReviewUrl($_review->getId()) ?>"><?php echo $this->escapeHtml($_review->getTitle()) ?></a> <?php echo $this->__('Review by <span>%s</span>', $this->escapeHtml($_review->getNickname())) ?>
-            </dt>
-            <dd>
+            <li itemprop="review" itemscope itemtype="http://schema.org/Review">
+                <a href="<?php echo $this->getReviewUrl($_review->getId()) ?>" itemprop="name"><?php echo $this->escapeHtml($_review->getTitle()) ?></a> <?php echo $this->__('Review by') ?> <span itemprop="author"><?php echo $this->escapeHtml($_review->getNickname()) ?></span>
                 <?php $_votes = $_review->getRatingVotes(); ?>
                 <?php if (count($_votes)): ?>
                     <table class="ratings-table">
@@ -47,7 +45,10 @@
                                     <th><?php echo $this->escapeHtml($_vote->getRatingCode()) ?></th>
                                     <td>
                                         <div class="rating-box">
-                                            <div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;"></div>
+                                            <div class="rating" style="width:<?php echo $_vote->getPercent() ?>%;" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                                <meta itemprop="bestRating" content="100" />
+                                                <span itemprop="ratingValue"><?php echo $_vote->getPercent() ?></span>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -55,11 +56,14 @@
                         </tbody>
                     </table>
                 <?php endif; ?>
-                <?php echo nl2br($this->escapeHtml($_review->getDetail())) ?>
-                <small class="date"><?php echo $this->__('(Posted on %s)', $this->formatDate($_review->getCreatedAt()), 'long') ?></small>
-            </dd>
+                <div itemprop="reviewBody"><?php echo nl2br($this->escapeHtml($_review->getDetail())) ?></div>
+                <small class="date">
+                    <meta itemprop="datePublished" content="<?php echo $_review->getCreatedAt() ?>">
+                    <?php echo $this->__('(Posted on %s)', $this->formatDate($_review->getCreatedAt()), 'long') ?>
+                </small>
+            </li>
         <?php endforeach; ?>
-        </dl>
+        </ul>
         <?php echo $this->getChildHtml('toolbar') ?>
     <?php endif;?>
     <?php echo $this->getChildHtml('review_form') ?>
