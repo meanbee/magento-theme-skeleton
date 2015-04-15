@@ -24,6 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php $_srcset_helper = Mage::helper('meanbee_theme/srcset') ?>
 <?php if(count($this->getItemCollection()->getItems())): ?>
     <div class="box-collateral box-up-sell">
         <h2><?php echo $this->__('You may also be interested in the following product(s)') ?></h2>
@@ -32,7 +33,9 @@
             <?php $this->resetItemsIterator() ?>
             <?php $_i=0; foreach($this->getItemCollection()->getItems() as $_product): ?>
                 <li itemscope itemtype="http://schema.org/Product" itemprop="isSimilarTo">
-                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(125) ?>" width="125" height="125" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" itemprop="image"/></a>
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(125) ?>" srcset="<?php echo $_srcset_helper->getResolutionSrcset($this->helper('catalog/image')->init($_product, 'small_image'), 125, 125, 4) ?>" width="125" height="125" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" itemprop="image"/>
+                    </a>
                     <h3 class="product-name" itemprop="name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" itemprop="url"><?php echo $this->escapeHtml($_product->getName()) ?></a></h3>
                     <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                         <?php echo $this->getPriceHtml($_product, true, '-upsell') ?>

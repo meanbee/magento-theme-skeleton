@@ -24,6 +24,7 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
+<?php $_srcset_helper = Mage::helper('meanbee_theme/srcset') ?>
 <?php if($this->getItems()->getSize()): ?>
     <div class="block block-related">
         <div class="block-title">
@@ -40,7 +41,9 @@
                             <?php endif; ?>
                         <?php endif; ?>
                         <div class="product">
-                            <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>" class="product-image"><img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(50) ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" itemprop="image"/></a>
+                            <a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_item->getName()) ?>" class="product-image">
+                                <img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(50) ?>" srcset="<?php echo $_srcset_helper->getResolutionSrcset($this->helper('catalog/image')->init($_item, 'thumbnail'), 50, 50, 4) ?>" width="50" height="50" alt="<?php echo $this->escapeHtml($_item->getName()) ?>" itemprop="image"/>
+                            </a>
                             <div class="product-details">
                                 <p class="product-name" itemprop="name"><a href="<?php echo $_item->getProductUrl() ?>" itemprop="url"><?php echo $this->escapeHtml($_item->getName()) ?></a></p>
                                 <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">

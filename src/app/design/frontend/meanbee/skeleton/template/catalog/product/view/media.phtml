@@ -33,6 +33,7 @@
 <?php
 $_product = $this->getProduct();
 $_helper = $this->helper('catalog/output');
+$_srcset_helper = Mage::helper('meanbee_theme/srcset');
 ?>
 <?php if ($_product->getImage() != 'no_selection' && $_product->getImage()): ?>
     <p class="product-image product-image-zoom">
@@ -59,7 +60,7 @@ $_helper = $this->helper('catalog/output');
 <?php else: ?>
     <p class="product-image">
         <?php
-        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" itemprop="image"/>';
+        $_img = '<img src="'.$this->helper('catalog/image')->init($_product, 'image')->resize(265).'" srcset="'.$_srcset_helper->getResolutionSrcset($this->helper('catalog/image')->init($_product, 'image'), 265, 265, 4).'" alt="'.$this->escapeHtml($this->getImageLabel()).'" title="'.$this->escapeHtml($this->getImageLabel()).'" itemprop="image"/>';
         echo $_helper->productAttribute($_product, $_img, 'image');
         ?>
     </p>
@@ -70,7 +71,9 @@ $_helper = $this->helper('catalog/output');
         <ul>
             <?php foreach ($this->getGalleryImages() as $_image): ?>
                 <li>
-                    <a href="#" onclick="popWin('<?php echo $this->getGalleryUrl($_image) ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>"><img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" width="56" height="56" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" itemprop="image"/></a>
+                    <a href="#" onclick="popWin('<?php echo $this->getGalleryUrl($_image) ?>', 'gallery', 'width=300,height=300,left=0,top=0,location=no,status=yes,scrollbars=yes,resizable=yes'); return false;" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>">
+                        <img src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(56); ?>" srcset="<?php echo $_srcset_helper->getResolutionSrcset($this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile()), 56, 56, 4) ?>" width="56" height="56" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
+                    </a>
                 </li>
             <?php endforeach; ?>
         </ul>
