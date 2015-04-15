@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Meanbee_Theme>
+            <version>1.0.0</version>
+        </Meanbee_Theme>
+    </modules>
+    <global>
+        <blocks>
+            <meanbee_theme>
+                <class>Meanbee_Theme_Block</class>
+            </meanbee_theme>
+        </blocks>
+        <helpers>
+            <meanbee_theme>
+                <class>Meanbee_Theme_Helper</class>
+            </meanbee_theme>
+        </helpers>
+    </global>
+</config>
