@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<layout>
+    <default>
+        <reference name="head">
+            <!-- Remove unwanted magento base theme assets -->
+            <action method="removeItem"><type>skin_css</type><name>css/widgets.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/print.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/styles-ie.css</name></action>
+
+            <!-- Load custom stylesheet for IE else load default styles -->
+            <action method="addItem"><type>skin_css</type><name>css/application-ie9.css</name><params/><if><![CDATA[ (IE 9) & (!IEMobile)]]></if></action>
+            <action method="addItem"><type>skin_css</type><name>css/application-ie8.css</name><params/><if><![CDATA[ (lte IE 8) & (!IEMobile)]]></if></action>
+            <action method="addItem"><type>skin_css</type><name>css/application.css</name><params/><if><![CDATA[<!--[if (gt IE 9) | (IEMobile)]><!-->]]></if></action>
+        </reference>
+
+        <reference name="catalog.topnav">
+            <block type="page/html_topmenu_renderer" name="catalog.topnav.renderer" template="page/html/topmenu/renderer.phtml"/>
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="page/html_head" name="footer.javascript" template="page/html/footer/javascript.phtml" />
+        </reference>
+    </default>
+</layout>
