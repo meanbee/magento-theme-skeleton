@@ -24,10 +24,17 @@
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
-<div class="footer-container">
-    <footer class="footer">
-        <?php echo $this->getChildHtml() ?>
-        <p class="bugs"><?php echo $this->__('Help Us to Keep Magento Healthy') ?> - <a href="http://www.magentocommerce.com/bug-tracking" onclick="this.target='_blank'"><strong><?php echo $this->__('Report All Bugs') ?></strong></a> <?php echo $this->__('(ver. %s)', Mage::getVersion()) ?></p>
-        <address><?php echo $this->getCopyright() ?></address>
-    </footer>
+<div class="block block-login">
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Login') ?></span></strong>
+    </div>
+    <form action="<?php echo $this->getPostActionUrl() ?>" method="post">
+        <div class="block-content">
+            <label for="mini-login"><?php echo $this->__('Email:') ?></label><input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="login[username]" id="mini-login" class="input-text" />
+            <label for="mini-password"><?php echo $this->__('Password:') ?></label><input type="password" name="login[password]" id="mini-password" class="input-text" />
+            <div class="actions">
+                <button type="submit" class="button"><span><span><?php echo $this->__('Login') ?></span></span></button>
+            </div>
+        </div>
+    </form>
 </div>
